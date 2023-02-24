@@ -1,43 +1,30 @@
----
-pool:
-  name: default
-  vmimage: ubuntu-latest
-
-trigger:
-  - main   
 parameters:
-  - name: goal
-    displayName: maven goal
+  - name: goals
     type: string
+    displayName: maven goals
     default: 'package'
     values:
-      - package
-      - clean
-      - install
-      - compile
-  - name: jdkVersion
-    displayName: 'Java Version'
-    type: string
-    default: '1.11'
-  - name: pomFilePath
-    displayName: mavenPOMFile
+      - 'package'
+      - 'clean'
+      - 'install'
+      - 'compile'
+  - name: mavenPOMFile
+    displayName: mavenpomfile
     type: string
     default: 'pom.xml'
-  - name: pathToPublish
-    displayName: Path To Publish
-    type: string
-    default: gameoflife-web/target/gameoflife.war
+  - name: javajdkversion
+    displayName: javajdkversion
+    default: '1.17'
 
-steps:
-  - task: Maven@3
-    inputs:
-      mavenPOMFile: "${{ parameters.pomFilePath }}"
-      goals: "${{ parameters.goal }}"
-      publishJUnitResults: yes
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      jdkVersionOption: "${{ parameters.jdkVersion }}"
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathToPublish: "${{ parameters.pathToPublish }}"
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
+    steps:
+    - task: maven@3
+      inputs:
+        mavenPOMFile: "${{ parameters.mavenpomfile }}"
+        goals: "${{ parameters.goals }}"
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'Path'
+        jdkVersionOption: "${{ parameters.javajdkversion }}"
+        jdkDirectory: /usr/lib/jvm/java-17-openjdk-amd64
+        mavenVersionOption: 'Path'
+        mavenDirectory: /opt/maven
