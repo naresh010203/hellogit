@@ -1,0 +1,41 @@
+---
+pool:
+  name: Azure-Devops
+  vmImage: ubuntu-latest
+trigger:
+- main:
+stages:
+- stage: 1
+  jobs:
+  - job: AWS1
+    steps:
+    - script: "echo AWS"
+    - script: "echo AWS"
+  jobs:
+  - job: DevOps1
+    steps:
+    - script: "echo DevOps1"
+    - script: "echo DevOps1"
+- stage: 2
+  jobs:
+  - job: AWS2
+    steps:
+    - script: "echo AWS2"
+    - script: "echo AWS2"
+  jobs:
+  - job: DevOps2
+    steps:
+    - script: "echo DevOps2"
+    - script: "echo DevOps2"
+- stage: 3
+  jobs:
+  - job: AWS3
+    steps:
+    - script: "echo AWS3"
+    - script: "echo AWS3"
+  jobs:
+  - job: DevOps3
+    steps:
+    - script: "echo DevOps3"
+    - script: "echo DevOps3"
+---

@@ -1,0 +1,25 @@
+---
+pool:
+  name: "Azure Pipelines"
+  vmImage: "ubuntu-latest"
+
+trigger:
+  - main
+
+jobs:
+  - job: build_job
+    displayName: Build dotnet project
+    steps:
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: src/dotnet-demoapp.csproj
+  - job: test_job
+    displayName: test dotnet
+    dependsOn: Build_Job
+    condition: succeeded()
+    steps:
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: test/test.csproj

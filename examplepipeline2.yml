@@ -1,0 +1,23 @@
+---
+pool:
+  name: Azure pipeline
+  vmImage: ubuntu-latest
+trigger:
+- main:
+jobs:
+- job: Devops
+   steps:
+   - script: 'echo Devops'
+   - script: 'echo Devops'
+   - script: 'echo Devops'
+   - script: 'echo Devops'
+   - script: 'echo Devops'
+jobs:
+- job: Azure
+   steps:
+   - script: 'echo Azure'
+   - script: 'echo Azure'
+   - script: 'echo Azure'
+   - script: 'echo Azure'
+   - script: 'echo Azure'
+---
