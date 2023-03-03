@@ -1,0 +1,33 @@
+---
+pool:
+  name: "Azure Pipelines"
+  vmImage: 'ubuntu-20.04'
+
+trigger:
+  - main
+
+jobs:
+  - job: prepare_job
+    displayName: software installation
+    steps:
+      - task: DotNetCoreInstaller@1
+        inputs:
+        packageType: 'sdk'
+        version: '6.x'
+  - job: build_job
+    displayName: build dotnet
+    dependsOn: prepare_job
+    condition: succeeded()
+    steps:
+      - task: DotNetCoreCLI@2
+        inputs:
+        command: 'build'
+        projects: src/dotnet-demoapp.csproj
+  - job: test_job
+    displayName: test dotnet
+    condition: succeeded()
+    steps:
+      - task: DotNetCoreCLI@2
+        inputs:
+        command: 'build'
+        projects: test/testcsproj
