@@ -1,21 +1,21 @@
 ---
 pool:
   name: "Azure Pipelines"
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 trigger:
-  - main
+  - master
 
 parameters:
   - name: version
     displayName: version
     type: string
-    default: 1.0
+    default: v1.0    
 
 steps:
   - task: Docker@2
     inputs:
-      command: 'build'
+      command: build
       buildContext: .
       repository: 'StudentCourses'
-      tags: '$(Build.BuildId)'
+      tags: $(Build.BuildId)
