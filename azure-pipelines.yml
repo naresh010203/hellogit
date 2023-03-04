@@ -1,12 +1,21 @@
 ---
-pool: 'Azure Pipelines'
+pool:
+  vmImage: ubuntu-latest
+  name: "Azure Pipelines"
 
-trigger:
-  - main
+triggers:
+  - master
+
+parameters:
+  - name: version
+    displayName: version
+    type: string
+    default: v1.0    
 
 steps:
-  - task: Maven@3
+  - task: Docker@2
     inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'package'
-      jdkVersionOption: '1.17'
+      command: build
+      buildContext: .
+      repository: 'StudentCourses'
+      tags: $(Build.BuildId)
