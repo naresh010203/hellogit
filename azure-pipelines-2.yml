@@ -3,7 +3,7 @@ pool:
   vmImage: ubuntu-latest
   name: "Azure Pipelines"
 
-triggers:
+trigger:
   - master
 
 parameters:
