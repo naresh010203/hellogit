@@ -1,0 +1,20 @@
+---
+pool:
+  name: "Azure Pipeines"
+  vmImage: 'ubuntu-latest'
+
+trigger:
+  - main
+
+steps:
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: echo "Build Directory is $(Agent.BuildDirectory)"
+  - task: Maven@3
+    inputs:
+      mavenPOMFile: 'pom.xml'
+      goals: 'package'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      jdkVersionOption: '1.17'
