@@ -1,0 +1,33 @@
+---
+pool:
+  name: "Azure Pipelines"
+  vmImage: 'ubuntu-latest'
+
+trigger:
+  - main
+
+parameters:
+  - name: string
+    displayName: maven goal
+    type: string
+    default: package
+    values:
+      - clean
+      - package
+      - test
+      - compile
+      - install
+      - deploy
+
+variables:
+  - name: checking
+    value: nothing
+
+steps:
+  - task: Maven@3
+    inputs:
+      mavenPOMFile: 'pom.xml'
+      goals: ${{ parameters.goal }}
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      jdkVersionOption: '1.17'
